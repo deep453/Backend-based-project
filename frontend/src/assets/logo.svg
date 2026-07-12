@@ -1,0 +1,125 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background glow border gradient -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2e63"/>
+      <stop offset="45%" stop-color="#a020f0"/>
+      <stop offset="100%" stop-color="#1fb8ff"/>
+    </linearGradient>
+
+    <!-- Main triangle ribbon gradient -->
+    <linearGradient id="triGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2e4d"/>
+      <stop offset="30%" stop-color="#e6297a"/>
+      <stop offset="55%" stop-color="#8a2be2"/>
+      <stop offset="80%" stop-color="#3d5bfd"/>
+      <stop offset="100%" stop-color="#1fc8ff"/>
+    </linearGradient>
+
+    <!-- Inner faint glow for the black cutout triangle -->
+    <radialGradient id="innerGlow" cx="35%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#3a0d3a"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </radialGradient>
+
+    <!-- "Tube" text gradient -->
+    <linearGradient id="tubeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff2e63"/>
+      <stop offset="50%" stop-color="#a020f0"/>
+      <stop offset="100%" stop-color="#1fb8ff"/>
+    </linearGradient>
+
+    <!-- Tagline gradient -->
+    <linearGradient id="tagGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff2e63"/>
+      <stop offset="50%" stop-color="#a020f0"/>
+      <stop offset="100%" stop-color="#1fb8ff"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1200" height="1200" rx="190" fill="#060608"/>
+
+  <!-- Glowing border -->
+  <rect x="14" y="14" width="1172" height="1172" rx="180"
+        fill="none" stroke="url(#borderGrad)" stroke-width="5"
+        opacity="0.85" filter="url(#softGlow)"/>
+  <rect x="14" y="14" width="1172" height="1172" rx="180"
+        fill="none" stroke="url(#borderGrad)" stroke-width="3"/>
+
+  <!-- Outer ribbon triangle (rounded) -->
+  <path d="
+    M 470 200
+    Q 430 195 430 240
+    L 430 785
+    Q 430 830 470 810
+    L 925 545
+    Q 965 520 965 500
+    Q 965 480 925 458
+    L 470 200
+    Z"
+    fill="url(#triGrad)" filter="url(#softGlow)"/>
+  <path d="
+    M 470 200
+    Q 430 195 430 240
+    L 430 785
+    Q 430 830 470 810
+    L 925 545
+    Q 965 520 965 500
+    Q 965 480 925 458
+    L 470 200
+    Z"
+    fill="url(#triGrad)"/>
+
+  <!-- Inner cut-out triangle (dark) -->
+  <path d="
+    M 528 358
+    Q 505 345 505 370
+    L 505 638
+    Q 505 663 528 650
+    L 815 520
+    Q 838 508 838 500
+    Q 838 492 815 480
+    L 528 358
+    Z"
+    fill="url(#innerGlow)"/>
+
+  <!-- White play triangle -->
+  <path d="
+    M 578 452
+    Q 562 442 562 462
+    L 562 542
+    Q 562 562 578 552
+    L 720 508
+    Q 736 502 736 500
+    Q 736 498 720 492
+    L 578 452
+    Z"
+    fill="#ffffff"/>
+
+  <!-- Wordmark -->
+  <text x="600" y="1010" text-anchor="middle"
+        font-family="Arial Black, Arial, sans-serif" font-weight="900"
+        font-size="150" letter-spacing="-2">
+    <tspan fill="#ffffff">Video</tspan><tspan fill="url(#tubeGrad)">Tube</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="1075" text-anchor="middle"
+        font-family="Arial, sans-serif" font-weight="700"
+        font-size="38" letter-spacing="6">
+    <tspan fill="#ff2e63">WATCH</tspan>
+    <tspan fill="#c23bd8">  •  </tspan>
+    <tspan fill="#a020f0">CREATE</tspan>
+    <tspan fill="#5a5df0">  •  </tspan>
+    <tspan fill="#1fb8ff">INSPIRE</tspan>
+  </text>
+</svg>
