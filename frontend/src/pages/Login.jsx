@@ -6,13 +6,14 @@ import logo from "../assets/logo.svg";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 
+import toast from "react-hot-toast";
+
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
 
     const navigate = useNavigate();
-
 
     const {
         register,
@@ -21,12 +22,9 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
-    const {
-        setUser,
-        setIsAuthenticated,
-        setLoading,
-        loading
-    } = useAuth();
+    const { login } = useAuth();
+
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data) => {
 
@@ -36,9 +34,12 @@ const Login = () => {
 
             const response = await loginUser(data);
 
-            setUser(response.data.data.user);
+            console.log(response);
 
-            setIsAuthenticated(true);
+            // Save logged-in user in Context
+            login(response.data.user);
+
+            toast.success("Welcome Back!");
 
             reset();
 
@@ -46,9 +47,11 @@ const Login = () => {
 
         } catch (error) {
 
-            alert(
+            console.error(error);
+
+            toast.error(
                 error.response?.data?.message ||
-                "Unable to login. Please try again."
+                "Login Failed"
             );
 
         } finally {

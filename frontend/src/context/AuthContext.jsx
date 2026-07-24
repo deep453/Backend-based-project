@@ -1,29 +1,50 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { getCurrentUser } from "../services/authService";
 
-// Create the context
 const AuthContext = createContext();
 
-// Provider component
 export const AuthProvider = ({ children }) => {
-
-    // Stores logged in user
     const [user, setUser] = useState(null);
 
-    // Stores loading state
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    // Stores login status
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // Check whether user is already logged in
+   const checkAuth = async () => {
+    try {
+        const response = await getCurrentUser();
+
+        setUser(response.data.data);
+    } catch (error) {
+        if (error.response?.status !== 401) {
+            console.error(error);
+        }
+
+        setUser(null);
+    } finally {
+        setLoading(false);
+    }
+};
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const login = (userData) => {
+        setUser(userData);
+    };
+
+    const logout = () => {
+        setUser(null);
+    };
 
     return (
         <AuthContext.Provider
             value={{
                 user,
-                setUser,
                 loading,
-                setLoading,
-                isAuthenticated,
-                setIsAuthenticated
+                login,
+                logout,
+                checkAuth,
             }}
         >
             {children}
@@ -31,7 +52,6 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// Custom Hook
 export const useAuth = () => {
     return useContext(AuthContext);
 };
