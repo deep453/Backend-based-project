@@ -5,25 +5,22 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-
     const [loading, setLoading] = useState(true);
 
     // Check whether user is already logged in
-   const checkAuth = async () => {
-    try {
-        const response = await getCurrentUser();
-
-        setUser(response.data.data);
-    } catch (error) {
-        if (error.response?.status !== 401) {
-            console.error(error);
+    const checkAuth = async () => {
+        try {
+            const response = await getCurrentUser();
+            setUser(response.data.data);
+        } catch (error) {
+            if (error.response?.status !== 401) {
+                console.error(error);
+            }
+            setUser(null);
+        } finally {
+            setLoading(false);
         }
-
-        setUser(null);
-    } finally {
-        setLoading(false);
-    }
-};
+    };
 
     useEffect(() => {
         checkAuth();
