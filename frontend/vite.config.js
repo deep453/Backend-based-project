@@ -7,4 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: "/Skill_Nova/", // Tells Vite to look for assets inside the subfolder path
 });
