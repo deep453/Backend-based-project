@@ -1,8 +1,11 @@
 import axios from "axios";
 
+// Vite uses import.meta.env.MODE instead of process.env.NODE_ENV
+const isProduction = import.meta.env.MODE === "production";
+
 const api = axios.create({
-    baseURL: process.env.NODE_ENV === "production" 
-        ? "https://onrender.com" // Make sure this matches your exact backend link
+    baseURL: isProduction 
+        ? "https://onrender.com" 
         : "http://localhost:8000/api/v1",
     withCredentials: true,
     headers: {
