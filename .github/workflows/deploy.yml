@@ -27,16 +27,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
-            - name: Install and Build Frontend
+      - name: Install and Build Frontend
         env:
-          CI: false # This forces Vite to ignore warnings and complete the build
+          CI: false
         run: |
           cd frontend
           npm install
           npm run build
-
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -44,7 +43,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './frontend/dist' # Change to './frontend/build' if using old Create-React-App instead of Vite
+          path: './frontend/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
