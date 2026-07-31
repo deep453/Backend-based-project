@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext"; // Hooks into your global context state
 
 import Layout from "./components/layout/Layout.jsx";
 
@@ -28,43 +29,41 @@ function Saved() {
 }
 
 function App() {
+    const { user, loading } = useAuth(); // Reads if a cookie session exists
+
+    // Prevents flashing screens while checking auth state on cold start
+    if (loading) {
+        return (
+            <div className="flex h-screen items-center justify-center bg-zinc-950 text-zinc-100 font-display">
+                Loading Application...
+            </div>
+        );
+    }
+
     return (
         <Routes>
-
+            {/* Public Pages */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route element={<Layout />}>
-
+            {/* Protected Routes Wrapper */}
+            {/* Redirects straight to /register if the visitor isn't logged in */}
+            <Route element={user ? <Layout /> : <Navigate to="/register" replace />}>
                 <Route path="/" element={<Home />} />
-
                 <Route path="/explore" element={<Explore />} />
-
                 <Route path="/ai" element={<AIHub />} />
-
                 <Route path="/saved" element={<Saved />} />
-
                 <Route path="/upload" element={<Upload />} />
-
                 <Route path="/watch/:id" element={<Watch />} />
-
                 <Route path="/profile" element={<Profile />} />
-
                 <Route path="/history" element={<History />} />
-
                 <Route path="/search" element={<Search />} />
-
                 <Route path="/dashboard" element={<Dashboard />} />
-
-                <Route
-                    path="/channel/:username"
-                    element={<Channel />}
-                />
-
+                <Route path="/channel/:username" element={<Channel />} />
             </Route>
 
+            {/* Catch-all 404 Route handling */}
             <Route path="*" element={<NotFound />} />
-
         </Routes>
     );
 }
