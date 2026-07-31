@@ -6,12 +6,19 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
-  id-token: write 
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -28,8 +35,14 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy to GitHub Pages Branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/dist
+          path: './frontend/dist' # Change to './frontend/build' if using old Create-React-App instead of Vite
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
